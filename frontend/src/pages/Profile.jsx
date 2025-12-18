@@ -6,10 +6,10 @@ import config from "../../config";
 const API = config.BASE_URL;
 
 // Icons for Stat Cards
-const IconTotal = () => <svg className="w-8 h-8 text-blue-500 transition-transform duration-300 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 3.75V16.5m-4.5-12.75V16.5m-4.5-12.75V16.5m0 4.5h13.5M3.75 7.5h13.5m-13.5 4.5h13.5m0 4.5h-13.5" /></svg>
-const IconApproved = () => <svg className="w-8 h-8 text-green-500 transition-transform duration-300 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-const IconPending = () => <svg className="w-8 h-8 text-yellow-500 transition-transform duration-300 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-const IconRejected = () => <svg className="w-8 h-8 text-red-500 transition-transform duration-300 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
+// const IconTotal = () => <svg className="w-8 h-8 text-blue-500 transition-transform duration-300 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 3.75V16.5m-4.5-12.75V16.5m-4.5-12.75V16.5m0 4.5h13.5M3.75 7.5h13.5m-13.5 4.5h13.5m0 4.5h-13.5" /></svg>
+// const IconApproved = () => <svg className="w-8 h-8 text-green-500 transition-transform duration-300 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+// const IconPending = () => <svg className="w-8 h-8 text-yellow-500 transition-transform duration-300 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+// const IconRejected = () => <svg className="w-8 h-8 text-red-500 transition-transform duration-300 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
 const IconDashboard = () => <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
 
 // Logout Icon
@@ -65,8 +65,9 @@ const Profile = () => {
 
       setUser(profileResponse.data);
 
-      const allPosts = Array.isArray(postsResponse.data) ? postsResponse.data : [];
-      setMyPosts(allPosts);
+  const allPosts = Array.isArray(postsResponse.data) ? postsResponse.data : [];
+  // show all statuses (approved / pending / rejected)
+  setMyPosts(allPosts);
       setAnalytics({
         total: allPosts.length,
         approved: allPosts.filter(p => p.status === 'approved').length,
@@ -90,6 +91,17 @@ const Profile = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
+  };
+
+  const getStatusStyles = (status) => {
+    switch (status) {
+      case "approved":
+        return { badge: "bg-green-100 text-green-800", footer: "bg-green-50 border-t border-green-200" };
+      case "rejected":
+        return { badge: "bg-red-100 text-red-800", footer: "bg-red-50 border-t border-red-200" };
+      default:
+        return { badge: "bg-yellow-100 text-yellow-800", footer: "bg-yellow-50 border-t border-yellow-200" };
+    }
   };
 
 
@@ -161,7 +173,7 @@ const Profile = () => {
                       {myPosts.map(post => (
                         <div
                           key={post._id}
-                          onClick={() => navigate(`/experience/${post._id}`)}
+                          onClick={() => navigate(`/experience/${post._id}`, { state: { post } })}
                           className="group bg-white rounded-2xl shadow-lg overflow-hidden 
                                      transition-all duration-300 ease-out
                                      hover:shadow-xl
@@ -175,34 +187,39 @@ const Profile = () => {
                                 <h3 className="text-2xl font-bold text-gray-900 truncate mb-1 bg-gradient-to-r from-blue-800 to-blue-900 bg-clip-text text-transparent">
                                   {post.companyName || "N/A"}
                                 </h3>
+                                {/* status badge top-right */}
+                                <div className="absolute top-4 right-4">
+                                  <span className={`inline-block text-xs font-semibold uppercase px-3 py-1 rounded-full ${getStatusStyles(post.status).badge}`}>
+                                    {post.status || "pending"}
+                                  </span>
+                                </div>
                               </div>
                             </div>
                           </div>
-
-                          <div className="p-5 space-y-3">
-                            <div className="flex flex-wrap gap-2 text-sm">
-                              <span className="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-medium">
-                                {post.branch || "N/A"}
-                              </span>
-                              <span className="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full">
-                                Passout: <strong>{post.passoutYear || "N/A"}</strong>
-                              </span>
+                            <div className="p-5 space-y-3">
+                              <div className="flex flex-wrap gap-2 text-sm">
+                                <span className="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-medium">
+                                  {post.branch || "N/A"}
+                                </span>
+                                <span className="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full">
+                                  Passout: <strong>{post.passoutYear || "N/A"}</strong>
+                                </span>
+                              </div>
+                              <div className="flex flex-wrap gap-2 text-sm">
+                                <span className="inline-block bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-medium">
+                                  {post.type || "N/A"}
+                                </span>
+                                <span className={`inline-block px-3 py-1 rounded-full font-medium ${getStatusStyles(post.status).badge}`}>
+                                  Status: <strong className="capitalize">{post.status || 'pending'}</strong>
+                                </span>
+                              </div>
                             </div>
-                            <div className="flex flex-wrap gap-2 text-sm">
-                              <span className="inline-block bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-medium">
-                                {post.type || "N/A"}
-                              </span>
-                              <span className="inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">
-                                Status: <strong className="capitalize">{post.status}</strong>
-                              </span>
-                            </div>
-                          </div>
 
-                          <div className="p-5 bg-gray-50 border-t border-gray-200 transition-all duration-300 group-hover:bg-gray-100">
-                            <p className="text-xs text-gray-500">
-                              Uploaded: {post.createdAt ? new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A'}
-                            </p>
-                          </div>
+                            <div className="p-5 bg-gray-50 border-t border-gray-200 transition-all duration-300 group-hover:bg-gray-100">
+                              <p className="text-xs text-gray-500">
+                                Uploaded: {post.createdAt ? new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A'}
+                              </p>
+                            </div>
                         </div>
                       ))}
                     </div>

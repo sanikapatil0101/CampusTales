@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import Footer from "../components/Footer";
 import config from "../../config";
@@ -18,6 +18,7 @@ const ExperienceDetails = () => {
   const navigate = useNavigate();
   const [experience, setExperience] = useState(null);
   const token = localStorage.getItem("token");
+  const location = useLocation();
 
   const fetchExperience = useCallback(async () => {
     try {
@@ -35,6 +36,14 @@ const ExperienceDetails = () => {
   }, [id, token, navigate]);
 
   useEffect(() => {
+    // If navigator passed the post in location.state (e.g., from Profile), use it immediately
+    if (location?.state?.post) {
+      setExperience(location.state.post);
+      // still try to fetch fresh copy in background
+      fetchExperience();
+      return;
+    }
+
     fetchExperience();
   }, [fetchExperience]);
 
