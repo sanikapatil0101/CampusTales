@@ -3,51 +3,93 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import Footer from "../components/Footer";
 import config from "../../config";
+
 const API = config.BASE_URL;
 
 // --- InfoTag Component ---
 const InfoTag = ({ label, value }) => (
-  <span className="inline-block bg-blue-50 text-blue-800 text-sm font-medium px-4 py-2 rounded-full
-                   transition-all duration-300 hover:bg-blue-100">
-    <strong>{label}:</strong> {value || 'N/A'}
+  <span className="inline-block bg-blue-50 text-blue-800 text-sm font-medium px-4 py-2 rounded-full">
+    <strong>{label}:</strong> {value || "N/A"}
   </span>
 );
 
 const ExperienceDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [experience, setExperience] = useState(null);
-  const token = localStorage.getItem("token");
   const location = useLocation();
+
+  const [experience, setExperience] = useState(null);
+
+  const token = localStorage.getItem("token");
+
+
+  const currentUserId = React.useMemo(() => {
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return payload.id || payload._id;
+    } catch {
+      return null;
+    }
+  }, [token]);
 
   const fetchExperience = useCallback(async () => {
     try {
       const response = await axios.get(`${API}/api/experience/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
       setExperience(response.data);
+
     } catch (err) {
       console.error("Failed to fetch experience:", err);
-      if (err.response && err.response.status === 404) {
-        alert("Experience not found.");
-        navigate('/dashboard');
+
+      if (!err.response) {
+        alert("Server not responding");
+        navigate("/dashboard");
+        return;
       }
+
+      const { status, data } = err.response;
+
+      // ❌ Not found
+      if (status === 404) {
+        alert("Experience not found");
+        navigate("/dashboard");
+        return;
+      }
+
+      // ⚠️ Not approved (pending / rejected)
+      if (status === 400) {
+        const ownerPost = location?.state?.post;
+
+        // ✅ Owner → stay, show warning, use passed data
+        if (ownerPost && ownerPost.student?._id === currentUserId) {
+          // alert("This experience is not approved yet");
+          setExperience(ownerPost);
+          return;
+        }
+
+        // ❌ Not owner
+        alert("You are not allowed to view this experience");
+        navigate("/dashboard");
+        return;
+      }
+
+      navigate("/dashboard");
     }
-  }, [id, token, navigate]);
+  }, [id, token, navigate, currentUserId, location]);
 
   useEffect(() => {
-    // If navigator passed the post in location.state (e.g., from Profile), use it immediately
     if (location?.state?.post) {
       setExperience(location.state.post);
-      // still try to fetch fresh copy in background
-      fetchExperience();
+      fetchExperience(); // background refresh
       return;
     }
 
     fetchExperience();
-  }, [fetchExperience]);
+  }, [fetchExperience, location]);
 
-  // --- Loading State ---
+  // --- Loading ---
   if (!experience) {
     return (
       <div className="flex h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 text-gray-800">

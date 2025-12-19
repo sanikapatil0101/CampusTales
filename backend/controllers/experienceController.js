@@ -52,23 +52,33 @@ exports.getApprovedExperiences = async (req, res) => {
 // @route GET /api/experience/:id
 exports.getExperienceById = async (req, res) => {
   try {
-    const exp = await Experience.findById(req.params.id).populate("student", "name email");
-    if (!exp) return res.status(404).json({ message: "Experience not found" });
-    if(exp.status !== "approved") {
-      res.status(400).json({
-        status: "pending",
-        message: "experiences is not approved"
-      })  
-      console.log("Experince is not approved",exp.id)
-      return;      
+    const exp = await Experience.findById(req.params.id)
+      .populate("student", "name email");
+
+    if (!exp) {
+      return res.status(404).json({
+        message: "Experience not found"
+      });
     }
-    console.log(exp);
-    res.status(200).json(exp);
+
+    if (exp.status !== "approved") {
+      return res.status(400).json({
+        message: "Experience not approved",
+        status: exp.status,                 // "pending" | "rejected"
+        studentId: exp.student._id.toString() // REQUIRED for frontend
+      });
+    }
+
+    return res.status(200).json(exp);
+
   } catch (error) {
-    console.log("This is the error: ",error)
-    res.status(500).json({ message: "Server error" });
+    console.error("getExperienceById error:", error);
+    return res.status(500).json({
+      message: "Internal server error"
+    });
   }
 };
+
 
 // @desc Increment views
 // @route PUT /api/experience/:id/view
