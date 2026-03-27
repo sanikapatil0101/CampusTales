@@ -23,10 +23,6 @@ const userSchema = new mongoose.Schema(
       enum: ["student", "admin"],
       default: "student",
     },
-    year: { 
-      type: String, 
-      enum: ["1st","2nd","3rd","4th"], 
-      default: "1st" },
     createdAt: {
       type: Date,
       default: Date.now,
