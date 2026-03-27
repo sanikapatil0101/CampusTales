@@ -23,7 +23,7 @@ app.use("/api/admin", require("./routes/adminRoutes"));
 
 // Default route
 app.get("/", (req, res) => {
-  res.send("PlacementShare Backend is running");
+  res.send("CampusTales Backend is running");
 });
 
 // Port from .env or fallback

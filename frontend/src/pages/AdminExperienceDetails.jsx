@@ -5,12 +5,12 @@ import Footer from "../components/Footer";
 import config from "../../config";
 const API = config.BASE_URL;
 
-// --- Icons ---
+//  Icons 
 const IconApprove = () => <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
 const IconReject = () => <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
 const IconDashboard = () => <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
 
-// --- Helper Components ---
+//  Helper Components 
 const InfoTag = ({ label, value }) => (
   <span className="inline-block bg-gray-100 text-gray-800 text-sm font-medium px-4 py-2 rounded-full
                    transition-all duration-300 hover:bg-gray-200">
@@ -107,7 +107,7 @@ const AdminExperienceDetails = () => {
           <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 sm:p-12
                          transition-all duration-300 ease-out">
             
-            {/* --- Company Header & Status --- */}
+            {/* Company Header & Status */}
             <div className="text-center mb-8 break-words">
               <h1 className="text-4xl font-bold text-gray-900 mb-3 leading-tight
                             transform transition-all duration-300">
@@ -118,7 +118,7 @@ const AdminExperienceDetails = () => {
               <StatusBadge status={experience.status} />
             </div>
 
-            {/* --- Info Tags --- */}
+            {/* Info Tags */}
             <div className="flex flex-wrap justify-center gap-3 border-y border-gray-200 py-6 my-8">
               <InfoTag label="Student" value={experience.student?.name} />
               <InfoTag label="Email" value={experience.student?.email} />
@@ -129,7 +129,7 @@ const AdminExperienceDetails = () => {
               <InfoTag label="Placement" value={experience.placementType} />
             </div>
 
-            {/* --- Experience Content --- */}
+            {/* Experience Content */}
             <div className="mt-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4
                             transform transition-all duration-300">
@@ -142,7 +142,7 @@ const AdminExperienceDetails = () => {
               </div>
             </div>
 
-            {/* --- Interview Questions & Answers --- */}
+            {/* Interview Questions & Answers */}
             {experience.questions && experience.questions.length > 0 && (
               <div className="mt-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4
@@ -181,22 +181,8 @@ const AdminExperienceDetails = () => {
               </div>
             )}
             
-            {/* Skills / Tools (if they exist) */}
-            {experience.skills && (
-              <div className="mt-6">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4
-                              transform transition-all duration-300">
-                  Skills / Tools
-                </h2>
-                <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 text-gray-800 
-                              whitespace-pre-line leading-relaxed break-words overflow-hidden
-                              transition-all duration-300 hover:bg-gray-100">
-                  {experience.skills}
-                </div>
-              </div>
-            )}
 
-            {/* --- Approve / Reject Buttons --- */}
+            {/* Approve / Reject Buttons */}
             {(experience.status !== 'approved' || experience.status !== 'rejected') && (
               <div className="flex justify-center gap-4 mt-10 border-t border-gray-200 pt-8">
                 {experience.status !== 'approved' && (
@@ -241,7 +227,7 @@ const AdminExperienceDetails = () => {
               </div>
             )}
 
-            {/* --- Go to Dashboard Button --- */}
+            {/* Go to Dashboard Button */}
             <div className={`flex justify-center ${experience.status === 'pending' ? 'mt-6' : 'mt-10 border-t border-gray-200 pt-8'}`}>
               <button
                 onClick={() => navigate("/admin-dashboard")}

@@ -7,8 +7,8 @@ const {
   approveExperience,
   rejectExperience,
   getExperienceById,
-  incrementViews,
-  getMyExperiences,
+  // incrementViews,
+  // getMyExperiences,
   getMyPosts
   
 } = require("../controllers/experienceController");
@@ -29,7 +29,7 @@ router.get("/:id", protect, getExperienceById);
 router.post("/", protect, createExperience); // submit new experience
 router.get("/", getApprovedExperiences); // view all approved
 router.get("/:id", getExperienceById); // view single experience
-router.put("/:id/view", incrementViews); // count views
+// router.put("/:id/view", incrementViews); // count views
 
 // Admin Routes
 router.get("/admin/pending", protect, adminOnly, getPendingExperiences);

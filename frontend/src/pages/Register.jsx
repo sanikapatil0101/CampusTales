@@ -26,7 +26,7 @@ const Register = () => {
   setMessage('')
   setLoading(true)
 
-  // ✅ Basic frontend validation
+  //  Basic frontend validation
   if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
     setError("Please enter a valid email address")
     setLoading(false)

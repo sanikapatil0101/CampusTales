@@ -26,7 +26,7 @@ const Login = () => {
   setMessage('')
   setLoading(true)
 
-  // ✅ Email validation
+  //  Email validation
   if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
     setError("Please enter a valid email address")
     setLoading(false)

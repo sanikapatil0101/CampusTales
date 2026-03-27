@@ -6,7 +6,7 @@ import config from "../../config";
 
 const API = config.BASE_URL;
 
-// --- InfoTag Component ---
+// InfoTag Component 
 const InfoTag = ({ label, value }) => (
   <span className="inline-block bg-blue-50 text-blue-800 text-sm font-medium px-4 py-2 rounded-full">
     <strong>{label}:</strong> {value || "N/A"}
@@ -51,25 +51,20 @@ const ExperienceDetails = () => {
 
       const { status, data } = err.response;
 
-      // ❌ Not found
       if (status === 404) {
         alert("Experience not found");
         navigate("/dashboard");
         return;
       }
 
-      // ⚠️ Not approved (pending / rejected)
       if (status === 400) {
         const ownerPost = location?.state?.post;
 
-        // ✅ Owner → stay, show warning, use passed data
         if (ownerPost && ownerPost.student?._id === currentUserId) {
-          // alert("This experience is not approved yet");
           setExperience(ownerPost);
           return;
         }
 
-        // ❌ Not owner
         alert("You are not allowed to view this experience");
         navigate("/dashboard");
         return;
@@ -89,7 +84,7 @@ const ExperienceDetails = () => {
     fetchExperience();
   }, [fetchExperience, location]);
 
-  // --- Loading ---
+  // Loading 
   if (!experience) {
     return (
       <div className="flex h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 text-gray-800">
@@ -115,7 +110,7 @@ const ExperienceDetails = () => {
           <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8 sm:p-12
                          transition-all duration-300 ease-out">
             
-            {/* --- Company Header --- */}
+            {/* Company Header */}
             <div className="text-center mb-8 break-words">
               <h1 className="text-4xl font-bold text-gray-900 mb-2 leading-tight
                             transform transition-all duration-300">
@@ -131,7 +126,7 @@ const ExperienceDetails = () => {
               </p>
             </div>
 
-            {/* --- Info Tags --- */}
+            {/* Info Tags */}
             <div className="flex flex-wrap justify-center gap-3 border-y border-gray-200 py-6 my-8">
               <InfoTag label="Branch" value={experience.branch} />
               <InfoTag label="Year" value={experience.year} />
@@ -140,7 +135,7 @@ const ExperienceDetails = () => {
               <InfoTag label="Placement" value={experience.placementType} />
             </div>
 
-            {/* --- Experience Content --- */}
+            {/* Experience Content */}
             <div className="mt-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4
                             transform transition-all duration-300">
@@ -153,7 +148,7 @@ const ExperienceDetails = () => {
               </div>
             </div>
 
-            {/* --- Questions & Answers Section --- */}
+            {/* Questions & Answers Section */}
             {experience.questions && experience.questions.length > 0 && (
               <div className="mt-12 pt-8 border-t-2 border-gray-200">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-6
@@ -180,7 +175,7 @@ const ExperienceDetails = () => {
               </div>
             )}
 
-            {/* --- Additional Notes Section --- */}
+            {/* Additional Notes Section */}
             {experience.additionalNotes && (
               <div className="mt-12 pt-8 border-t-2 border-gray-200">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4
@@ -197,7 +192,7 @@ const ExperienceDetails = () => {
               </div>
             )}
 
-            {/* --- Back Button --- */}
+            {/* Back Button */}
             <div className="flex justify-center mt-10">
               <button
                 onClick={() => navigate(-1)}

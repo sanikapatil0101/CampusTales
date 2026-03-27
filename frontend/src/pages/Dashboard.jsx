@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import config from "../../config";
 const API = config.BASE_URL;
 
-// --- Icon Components for Inputs ---
+// Icon Components for Inputs 
 const IconSearch = () => (
   <svg
     className="w-5 h-5 text-gray-400"
@@ -70,7 +70,7 @@ const IconNotFound = () => (
   </svg>
 );
 
-// --- New Round Profile Icon ---
+//Profile Icon 
 const IconProfile = () => (
   <svg
     className="w-6 h-6 text-white"
@@ -212,7 +212,7 @@ const Dashboard = () => {
             </button>
           </div>
 
-          {/* --- Filters Section --- */}
+          {/* Filters Section */}
           <div className="p-4 bg-white rounded-xl shadow-lg mb-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
@@ -258,7 +258,7 @@ const Dashboard = () => {
               </button>
             </div>
 
-            {/* --- Collapsible Filters --- */}
+            {/* Collapsible Filters */}
             {showFilters && (
               <div className="grid grid-cols-2 md:grid-cols-5 gap-4 pt-4 mt-4 border-t border-gray-200">
 
@@ -311,7 +311,7 @@ const Dashboard = () => {
 
           </div>
 
-          {/* --- Experience Cards (scrollable) --- */}
+          {/* Experience Cards (scrollable) */}
           <div className="relative flex-1 overflow-y-auto">
             {loading ? (
               <div className="flex flex-col items-center justify-center text-center bg-white shadow-xl rounded-2xl p-10 border border-gray-200">

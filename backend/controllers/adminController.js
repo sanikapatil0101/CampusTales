@@ -1,7 +1,7 @@
 const Experience = require("../models/Experience");
 const User = require("../models/User");
 
-// ===== Get all experiences (Admin) =====
+// Get all experiences (Admin)
 const getAllExperiences = async (req, res) => {
   try {
     const experiences = await Experience.find()
@@ -15,7 +15,7 @@ const getAllExperiences = async (req, res) => {
   }
 };
 
-// ===== Get single experience by ID =====
+// Get single experience by ID 
 const getExperienceById = async (req, res) => {
   try {
     const experience = await Experience.findById(req.params.id)
@@ -30,7 +30,7 @@ const getExperienceById = async (req, res) => {
   }
 };
 
-// ===== Approve experience =====
+// Approve experience 
 const approveExperience = async (req, res) => {
   try {
     const experience = await Experience.findById(req.params.id);
@@ -46,7 +46,7 @@ const approveExperience = async (req, res) => {
   }
 };
 
-// ===== Reject experience =====
+// Reject experience 
 const rejectExperience = async (req, res) => {
   try {
     const experience = await Experience.findById(req.params.id);
@@ -62,7 +62,7 @@ const rejectExperience = async (req, res) => {
   }
 };
 
-// ===== Analytics =====
+// Analytics 
 const getAnalytics = async (req, res) => {
   try {
     const totalUsers = await User.countDocuments();

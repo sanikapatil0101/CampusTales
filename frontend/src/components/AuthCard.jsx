@@ -1,5 +1,3 @@
-import React from 'react'
-
 const AuthCard = ({ title, children }) => {
   return (
     <div className="bg-white shadow-xl rounded-2xl p-8 sm:p-10 w-full max-w-md

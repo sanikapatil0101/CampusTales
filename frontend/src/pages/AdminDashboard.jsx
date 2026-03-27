@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import config from "../../config";
 const API = config.BASE_URL;
 
-// --- Icons for Stat Cards ---
+//Icons for Stat Cards 
 const IconTotalUsers = () => <svg className="w-8 h-8 text-purple-500 transition-transform duration-300 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 00-12.728 0m12.728 0A9.094 9.094 0 015.636 18.72m12.728 0A9.094 9.094 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632zM15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
 const IconTotalPosts = () => <svg className="w-8 h-8 text-blue-500 transition-transform duration-300 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 3.75V16.5m-4.5-12.75V16.5m-4.5-12.75V16.5m0 4.5h13.5M3.75 7.5h13.5m-13.5 4.5h13.5m0 4.5h-13.5" /></svg>
 const IconApproved = () => <svg className="w-8 h-8 text-green-500 transition-transform duration-300 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -105,7 +105,7 @@ const AdminDashboard = () => {
         return { footer: "bg-green-50 border-t border-green-200", text: "text-green-700" };
       case "rejected":
         return { footer: "bg-red-50 border-t border-red-200", text: "text-red-700" };
-      default: // 'pending'
+      default: 
         return { footer: "bg-yellow-50 border-t border-yellow-200", text: "text-yellow-700" };
     }
   };
@@ -146,7 +146,7 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          {/* --- Analytics Grid --- */}
+          {/*Analytics Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-6">
             <StatCard title="Total Users" value={analytics.totalUsers} icon={<IconTotalUsers />} />
             <StatCard title="Total Posts" value={analytics.totalExperiences} icon={<IconTotalPosts />} />
@@ -155,7 +155,7 @@ const AdminDashboard = () => {
             <StatCard title="Rejected" value={analytics.totalRejected} icon={<IconRejected />} />
           </div>
 
-          {/* --- Filters Section --- */}
+          {/* Filters Section */}
           <div className="p-6 bg-white rounded-xl shadow-lg mb-6
                          transition-all duration-300 ease-out">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -243,7 +243,7 @@ const AdminDashboard = () => {
           </div>
           </div>
 
-          {/* --- Experiences List (scrollable) --- */}
+          {/*  Experiences List */}
           <div className="relative flex-1 overflow-y-auto">
             {loading ? (
               <div className="text-center text-gray-600 font-medium text-xl">Loading posts...</div>
@@ -270,7 +270,7 @@ const AdminDashboard = () => {
                                  hover:shadow-xl
                                  cursor-pointer border border-gray-100 hover:border-gray-200"
                     >
-                      {/* Card Header - ATTRACTIVE Company Name Section */}
+                      {/* Card Header -  Company Name Section */}
                       <div className="p-6 bg-gradient-to-r from-blue-100 to-blue-50 
                                     border-b-2 border-blue-200">
                         <div className="relative">

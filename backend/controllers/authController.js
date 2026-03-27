@@ -7,8 +7,8 @@ const generateToken = (id, role) => {
   return jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn: "7d" });
 };
 
-// @desc Register a new user
-exports.registerUser = async (req, res) => {
+// Register a new user
+const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
@@ -16,13 +16,13 @@ exports.registerUser = async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    // ✅ Email validation (basic format check)
+    // Email validation (basic format check)
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({ message: "Please enter a valid email address" });
     }
 
-    // ✅ Password constraint
+    // Password constraint
     if (password.length < 6) {
       return res
         .status(400)
@@ -61,8 +61,8 @@ exports.registerUser = async (req, res) => {
   }
 };
 
-// @desc Login user
-exports.loginUser = async (req, res) => {
+// Login user
+const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -90,9 +90,11 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-// @desc Get user profile
-exports.getUserProfile = async (req, res) => {
+// Get user profile
+const getUserProfile = async (req, res) => {
   const user = await User.findById(req.user.id).select("-password");
   if (!user) return res.status(404).json({ message: "User not found" });
   res.json(user);
 };
+
+module.exports={registerUser,loginUser,getUserProfile};

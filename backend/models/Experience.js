@@ -45,10 +45,10 @@ const experienceSchema = new mongoose.Schema(
       enum: ["pending", "approved", "rejected"],
       default: "pending",
     },
-    views: {
-      type: Number,
-      default: 0,
-    },
+    // views: {
+    //   type: Number,
+    //   default: 0,
+    // },
     questions: [
       {
         _id: false,
