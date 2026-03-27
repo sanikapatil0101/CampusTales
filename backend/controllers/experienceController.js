@@ -80,50 +80,6 @@ const getExperienceById = async (req, res) => {
 };
 
 
-// @desc Get all pending experiences (Admin)
-// @route GET /api/experience/admin/pending
-// @access Admin
-const getPendingExperiences = async (req, res) => {
-  try {
-    const pending = await Experience.find({ status: "pending" }).populate("student", "name email");
-    res.json(pending);
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
-  }
-};
-
-// @desc Approve experience (Admin)
-// @route PUT /api/experience/admin/approve/:id
-// @access Admin
-const approveExperience = async (req, res) => {
-  try {
-    const exp = await Experience.findById(req.params.id);
-    if (!exp) return res.status(404).json({ message: "Experience not found" });
-
-    exp.status = "approved";
-    await exp.save();
-    res.json({ message: "Experience approved" });
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
-  }
-};
-
-// @desc Reject experience (Admin)
-// @route PUT /api/experience/admin/reject/:id
-const rejectExperience = async (req, res) => {
-  try {
-    const exp = await Experience.findById(req.params.id);
-    if (!exp) return res.status(404).json({ message: "Experience not found" });
-
-    exp.status = "rejected";
-    await exp.save();
-    res.json({ message: "Experience rejected" });
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
-  }
-};
-
-
 // @desc Get all experiences of logged-in student (any status)
 const getMyExperiences = async (req, res) => {
   try {
@@ -159,9 +115,6 @@ const getMyPosts = async (req, res) => {
 module.exports={createExperience,
   getApprovedExperiences,
   getExperienceById,
-  getPendingExperiences,
-  approveExperience,
-  rejectExperience,
   getMyExperiences,
   getMyPosts
 };

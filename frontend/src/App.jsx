@@ -4,7 +4,6 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import MyPosts from "./pages/MyPosts";
 import AdminDashboard from "./pages/AdminDashboard";
 import Profile from "./pages/Profile";
 import CreateExperience from "./pages/CreateExperience";
@@ -57,7 +56,6 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/create" element={<CreateExperience />} />
           <Route path="/experience/:id" element={<ExperienceDetails />} />
-          <Route path="/dashboard/myposts" element={<MyPosts />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
 

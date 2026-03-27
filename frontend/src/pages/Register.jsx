@@ -133,7 +133,7 @@ const Register = () => {
             <input
               type="email"
               id="email"
-              placeholder="you@example.com"
+              placeholder="you@gmail.com"
               value={formData.email}
               onChange={handleChange}
               className={inputClass}
